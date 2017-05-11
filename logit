@@ -1,0 +1,51 @@
+---
+title: 'Python tutorial'
+author: "Samuel Chan"
+date: "1 May 2017"
+output:
+  pdf_document:default
+  html_document: default
+---
+
+## Setting up our dataframe
+Here we'll import a few packages required for this analysis
+```{python}
+import pandas as pd
+import statsmodels.api as sm
+import pylab as pl
+import numpy as np
+```
+
+We're using a dataset that contains several columns
+As predictor variables: 
+- gpa  
+- gre score  
+- rank of an applicant's undergraduate alma mater, to predict if the candidate was admitted or not  
+
+```{python}
+df = pd.read_csv("binary.csv")
+print(df.head()) 
+```
+
+Rename the 'rank' column because there is also a DataFrame method called 'rank'  
+```{python}
+df.columns = ['admit', 'gre', 'gpa', 'prestige']
+print(df.columns) 
+```
+
+# Ask pandas to give us a summarized view of our df
+# through describe(); Analogous to summary in R.
+print(df.describe())
+
+# SD is included in the summary, but we could also
+# specifically ask for it using .std()
+print(df.std())
+
+# Similar to table() in R, we can use pd.crosstab()
+# to get multidimensional frequency table
+print(pd.crosstab(
+    df['admit'], df['prestige'],
+    rownames=['admit']
+))
+
+
